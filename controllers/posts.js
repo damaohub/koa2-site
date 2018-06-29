@@ -35,13 +35,13 @@ const postService = require('../services/posts')
 
     const PostsByTag = async (ctx, next) => {
         let data = await postService.getPostsByTag(ctx.params.tag)
+        _addLink(data, ctx.request.origin + '/post/')
         let _tags = await _tagsPromise;
         _addLink(_tags, ctx.request.origin + '/tag/')
         ctx.render('tag.html', {
             tags: _tags,
             posts: data,
-            tag: ctx.params.tag,
-         
+            tag: ctx.params.tag, 
         })
     }
 
