@@ -140,7 +140,7 @@ const url = require('url')
      * @param {string} tagName 
      */
     const getPostsByTag = async (tagName) => {
-        let posts = await postModel.Post.findAndCountAll({
+        let posts = await postModel.Post.findAll({
             include: [{
                 model: postModel.Tag,
                 where : { name: tagName }
@@ -208,9 +208,7 @@ const url = require('url')
         }
     }
 
-    const getLink = async (ctx,path='') => {
-        return ctx.request.href+path
-    }
+    
 
     module.exports = {
         getPosts,
@@ -226,6 +224,5 @@ const url = require('url')
         getPostsByTag,
         createTags,
         createPostTagBypost,
-        deletePostTagsByPost,
-        getLink
+        deletePostTagsByPost
     }

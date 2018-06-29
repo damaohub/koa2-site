@@ -1,31 +1,47 @@
 const postService = require('../services/posts')
 
-
+    const _tagsPromise = postService.getTags()//上下文之外执行一次IO
+    const _addLink = (model,url) => {
+        for(let i = 0;i<model.length; i++) {
+            model[i].link = url
+        }
+        return model
+    }
+    
     const index = async (ctx, next) => {
-        let data = await postService.getPosts()
-        let _link = await postService.getLink(ctx,'post/')
+        let _posts = await postService.getPosts()
+        let _tags = await _tagsPromise;
+        _addLink(_tags, ctx.request.origin + '/tag/')
+        _addLink(_posts, ctx.request.origin + '/post/')
         ctx.render('index.html', {
-            posts: data,
-            link: _link
+            posts: _posts,
+            tags: _tags
         })
     }
 
     const PostById = async (ctx, next) => {
-        let data = await postService.getPost({ postID: ctx.params.id })
-        let _tags = await postService.getTagsBypost(ctx.params.id)
+        const _postPromise = postService.getPost({ postID: ctx.params.id })
+        const _postTagsPromise = postService.getTagsBypost(ctx.params.id)
+        let _tags = await _tagsPromise;
+        _addLink(_tags, ctx.request.origin + '/tag/')
+        let _post = await _postPromise
+        let _postTags = await _postTagsPromise
         ctx.render('post.html', {
-            post: data,
-            tags: _tags
+            tags: _tags,
+            post: _post,
+            postTags: _postTags
         })
     }
 
     const PostsByTag = async (ctx, next) => {
         let data = await postService.getPostsByTag(ctx.params.tag)
-        let _link = await postService.getLink(ctx, 'post/')
+        let _tags = await _tagsPromise;
+        _addLink(_tags, ctx.request.origin + '/tag/')
         ctx.render('tag.html', {
+            tags: _tags,
             posts: data,
             tag: ctx.params.tag,
-            link: _link
+         
         })
     }
 
