@@ -43,11 +43,12 @@ const BlogRole = db.defineModel('blog_role', {
 })
 
 const AdminRole = db.defineModel('admin_role', {
-    id: {
-        type: db.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-      }
+    adminuserId: {
+        type: db.INT
+    },
+    roleId: {
+        type: db.INT
+    }
 })
 BlogRole.belongsToMany(BlogUser, { through: 'blog_admin_role',foreignKey: 'roleId' })
 BlogUser.belongsToMany(BlogRole, { through: 'blog_admin_role', foreignKey: 'adminuserId' })
