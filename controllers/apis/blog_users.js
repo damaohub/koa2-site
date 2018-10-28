@@ -14,17 +14,17 @@ const tokenUtil = require('../../util/tokenUtil')
         }
         let _uuid = await uuid.db32()//注意let 变量命名相同冲突
         let password_hash = saltMd5.md5Salt(params.password, _uuid)//用生成的uuid 做盐
-        let profile = '默认角色'
+        let profile = '管理员'
         let user = { uuid: _uuid, username: params.username, email: params.email, password_hash: password_hash, profile: profile}
         let newUser = await userServiece.addUser(user)//await,于_uuid后执行,
         let roles = await _addRoleUser(newUser.id)
-        return ctx.response.body = {code: 20000, msg: '注册成功'}
+        return ctx.response.body = {code: 20000, msg: '注册成功', data: roles}
     }
     /**
      * 
      * @param {*} userId 
      */
-    const _addRoleUser = async (userId, defaultRoleId=3) => {
+    const _addRoleUser = async (userId, defaultRoleId=1) => {
         userServiece.addAdminRole(userId, defaultRoleId)
     }
 

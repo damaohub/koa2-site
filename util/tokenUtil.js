@@ -17,7 +17,7 @@ module.exports = new JwtSession() ;
 JwtSession.prototype.getSession =  (users) =>{
   var expiresIn = 12 * 60 * 60;
   var payload = {};
-  if(users.uuid) { 
+  if(users.uuid) {
     payload.userUuid = users.uuid
     payload.userId = users.id
     payload.userName = users.name

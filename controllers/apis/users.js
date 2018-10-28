@@ -1,6 +1,6 @@
 //const redis = require('../util/redis')
 const status = require('../../util/resTemplate')
-const userServiece = require('../../services/blog_users').default
+const userServiece = require('../../services/users')
 const saltMd5 = require('../../util/saltMD5')
 const tokenUtil = require('../../util/tokenUtil')
 
@@ -42,7 +42,8 @@ const tokenUtil = require('../../util/tokenUtil')
     const getUser = async(ctx,next) => {
         let token = ctx.request.header['x-token']
         let _userInfo = await tokenUtil.prverifySession(token)
-        let userInfo = await tokenUtil.callWithToken(token,userServiece.getUser,_userInfo.userID)
+        console.log(_userInfo)
+        let userInfo = await tokenUtil.callWithToken(token, userServiece.getUser, _userInfo.userID)
         let _count = await userServiece.getLowerCount(_userInfo.userID)
         Object.assign(userInfo.data.dataValues,{lowerCount: _count})
         return ctx.response.body = userInfo

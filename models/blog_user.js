@@ -42,7 +42,7 @@ const BlogRole = db.defineModel('blog_role', {
     }
 })
 
-const AdminRole = db.defineModel('admin_role', {
+const AdminRole = db.defineModel('blog_admin_role', {
     adminuserId: {
         type: db.INT
     },

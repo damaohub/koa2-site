@@ -63,7 +63,7 @@ const userModel = require('../models/blog_user')
             for (let i=0; i<roleUser.length; i++){
                 _roles[i] = roleUser[i].name
             }
-            console.log(userInfo)
+            console.log(_roles)
             let info = Object.assign(userInfo.dataValues, { roles: _roles })//sequelize的对象经过封装，不能直接合并，dataValues才是数据
             return info
         } catch (error) {
