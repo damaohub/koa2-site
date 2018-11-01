@@ -7,10 +7,10 @@
 */
 
 const DbConfig = {
-    database: "",
-    username: "",
-    password: "",
-    host: "",
+    database: "blog",
+    username: "root",
+    password: "0drmfslx89*M",
+    host: "127.0.0.1",
     port: 3306,
     dialect: "mysql",
     //连接池的配置
