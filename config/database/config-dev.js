@@ -9,7 +9,7 @@
 const DbConfig = {
     database: "blog",
     username: "root",
-    password: "0drmfslx89",
+    password: "",
     host: "127.0.0.1",
     port: 3306,
     dialect: "mysql",
